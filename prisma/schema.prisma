@@ -1,0 +1,133 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "./generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  // url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  CUSTOMER
+}
+
+model Users {
+  idUser        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  role      Role     @default(CUSTOMER)
+  token     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  addresses Addresses[]
+  carts     Carts[]
+  orders    Orders[]
+
+  @@map("users")
+}
+
+model Categories {
+  idCategorie        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  products  Products[]
+
+  @@map("categories")
+}
+
+model Products {
+  idProduct        Int      @id @default(autoincrement())
+  name        String
+  description String
+  price       Float
+  stock       Int
+  categorieId  Int 
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  categorie   Categories @relation(fields: [categorieId], references: [idCategorie], onDelete: Cascade, onUpdate: Cascade)
+  cartItems   CartItems[]
+  orderItems  OrderItems[]
+
+  @@map("products")
+}
+
+model Addresses {
+  idAddress        Int      @id @default(autoincrement())
+  userId     Int
+  street     String
+  city       String
+  country    String
+  zipCode    String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user       Users @relation(fields: [userId], references: [idUser], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("addresses")
+}
+
+model Carts {
+  idCart        Int      @id @default(autoincrement())
+  userId     Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user       Users @relation(fields: [userId], references: [idUser], onDelete: Cascade, onUpdate: Cascade)
+  cartItems  CartItems[]
+  @@map("carts")
+}
+
+model CartItems {
+  idCartItem        Int      @id @default(autoincrement())
+  cartId     Int
+  productId  Int
+  quantity   Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  cart       Carts    @relation(fields: [cartId], references: [idCart], onDelete: Cascade, onUpdate: Cascade)
+  product    Products @relation(fields: [productId], references: [idProduct], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("cart_items")
+}
+
+model Orders {
+  idOrder        Int      @id @default(autoincrement())
+  userId     Int
+  totalPrice Float
+  orderStatus     String
+  addressOrdered String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user       Users @relation(fields: [userId], references: [idUser], onDelete: Cascade, onUpdate: Cascade)
+  orderItems OrderItems[]
+
+  @@map("orders")
+}
+
+model OrderItems {
+  idOrderItem        Int      @id @default(autoincrement())
+  orderId    Int
+  productId  Int
+  quantity   Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  order      Orders   @relation(fields: [orderId], references: [idOrder], onDelete: Cascade, onUpdate: Cascade)
+  product    Products @relation(fields: [productId], references: [idProduct], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("order_items")
+}
