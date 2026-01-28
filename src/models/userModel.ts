@@ -1,7 +1,7 @@
 import {prisma} from '../config/database';
-import { UserType } from '../types/type';
+import { UserCreateType } from '../types/prismaType';
 
-export const registerUser = async (valid:UserType) => {
+export const registerUser = async (valid:UserCreateType) => {
   return await prisma.users.create({
     data: {
       email: valid.email,
@@ -11,23 +11,23 @@ export const registerUser = async (valid:UserType) => {
   });
 };
 
-export const findUserByEmail = async (valid: UserType) => {
+export const findUserByEmail = async (email:string) => {
   return await prisma.users.findFirst({
     select: {
       email: true
     },
     where: {
-      email: valid.email
+      email: email
     }
   });
 }
-export const findUserByUsername = async (valid: UserType) => {
+export const findUserByUsername = async (username:string) => {
   return await prisma.users.findFirst({
     select: {
       username: true
     },
     where: {
-      username: valid.username
+      username: username
     }
   });
 }
