@@ -19,4 +19,3 @@ app.notFound(async (c) => {
 app.onError(errorMiddleware)
 
 export default app
-
