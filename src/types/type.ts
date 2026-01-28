@@ -1,10 +1,10 @@
-export interface UserType {
+export type UserType ={
   username: string;
   email: string;
   password: string;
 }
 
-export interface ProductType {
+export type ProductType = {
   id?: number;
   name: string;
   description: string;
