@@ -4,6 +4,11 @@ export type UserRegisterType ={
   password: string;
 }
 
+export type UserLoginType = {
+  username:string,
+  password:string
+}
+
 export type ProductType = {
   id?: number;
   name: string;
