@@ -5,7 +5,7 @@ import { errorResponse } from './helpers/response';
 
 const app = new Hono()
 
-app.route('/api/',r)
+app.route('/api',r)
 
 app.get('/', async (c) => {
 
