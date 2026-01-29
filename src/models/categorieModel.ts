@@ -24,7 +24,7 @@ const getCategorieNameExceptSelf = async(name:string,id:number)=>{
 }
 
 const getId = async(id:number)=>{
-  return prisma.categories.findFirst({
+  return await prisma.categories.findFirst({
     select:{
       idCategorie:true,
       name:true
@@ -36,7 +36,7 @@ const getId = async(id:number)=>{
 }
 
 const create = async(res:CategorieType)=>{
-  return prisma.categories.create({
+  return await prisma.categories.create({
     data:{
       name:res.name
     }
@@ -44,7 +44,7 @@ const create = async(res:CategorieType)=>{
 }
 
 const update = async(res:CategorieType,id:number)=>{
-  prisma.categories.update({
+  await prisma.categories.update({
     data:{
       name:res.name
     },
