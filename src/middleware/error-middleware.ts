@@ -8,6 +8,10 @@ const errorMiddleware = (err:unknown,c:Context)=>{
     return errorResponse(c, err.message, err.statusCode);
   }
 
+  if(err instanceof SyntaxError){
+    return errorResponse(c,'Invalid JSON syntax!', 400);
+  }
+
   if(err instanceof ValidationError){
     return validationErrorResponse(c, err.errors, err.statusCode);
   }
