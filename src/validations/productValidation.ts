@@ -9,7 +9,7 @@ const productValidation = z.object({
     .positive({message: "price must be positive!"}),
   stock: z.number({message: "stock is required!"})
     .min(0,{message: "stock must be at least 0!"}),
-  categoryId: z.number({message: "category is required!"})
+  categorie: z.number({message: "category is required!"})
     .positive({message: "category must be positive!"})
 }).strict();
 
