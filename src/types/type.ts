@@ -17,6 +17,6 @@ export type ProductType = {
   name: string,
   description: string,
   price: number,
-  createdAt?: Date,
-  updatedAt?: Date
+  stock:number,
+  categorie:number
 }
