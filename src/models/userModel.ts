@@ -32,16 +32,16 @@ export const findUserByUsername = async (username:string) => {
   });
 }
 
-// export const findUserByUsernameWithPassword = async (username: string,password:string) => {
-//   return await prisma.users.findUnique({
-//     select: {
-//       idUser:true,
-//       username: true,
-//       password: true
-//     },
-//     where: {
-//       username:username,
-//       password:password
-//     }
-//   });
-// }
+export const findByUsernameLogin = async (username: string) => {
+  return await prisma.users.findFirst({
+    select: {
+      idUser:true,
+      username: true,
+      password: true,
+      role:true
+    },
+    where: {
+      username:username
+    }
+  });
+}
