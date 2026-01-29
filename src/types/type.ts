@@ -1,7 +1,7 @@
 export type UserRegisterType ={
-  username: string;
-  email: string;
-  password: string;
+  username: string,
+  email: string,
+  password: string
 }
 
 export type CategorieType = {
@@ -14,10 +14,9 @@ export type UserLoginType = {
 }
 
 export type ProductType = {
-  id?: number;
-  name: string;
-  description: string;
-  price: number;
-  createdAt?: Date;
-  updatedAt?: Date;
+  name: string,
+  description: string,
+  price: number,
+  createdAt?: Date,
+  updatedAt?: Date
 }
