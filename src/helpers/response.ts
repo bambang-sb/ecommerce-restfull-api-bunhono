@@ -1,7 +1,8 @@
 import { Context, } from 'hono';
 import { ContentfulStatusCode,StatusCode } from 'hono/utils/http-status';
 
-export const successResponse = (c:Context,data: [], msg = 'Success') => {
+// T untuk object ataupun array object
+export const successResponse = <T>(c:Context,data: T, msg = 'Success') => {
   return c.json({
     statusCode:200,
     message:msg,
