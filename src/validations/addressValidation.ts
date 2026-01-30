@@ -7,9 +7,9 @@ const addressValidation = z.object({
   city: z.string({message: "city is required!"})
     .min(2,{message:'city minimal 2 character!'})
     .max(100,{message:'city maximal 100 character!'}),
-  zipCode: z.string({message: "postal Code is required!"})
-    .min(4,{message:'postal Code minimal 4 character!'})
-    .max(20,{message:'postal Code maximal 20 character!'}),
+  zipCode: z.string({message: "zip Code is required!"})
+    .min(4,{message:'zip Code minimal 4 character!'})
+    .max(20,{message:'zip Code maximal 20 character!'}),
   country: z.string({message: "country is required!"})
     .min(2,{message:'country minimal 2 character!'})
     .max(100,{message:'country maximal 100 character!'}),
