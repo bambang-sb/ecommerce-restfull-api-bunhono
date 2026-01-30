@@ -20,3 +20,10 @@ export type ProductType = {
   stock:number,
   categorie:number
 }
+
+export type AddressType = {
+  street:string,
+  city:string,
+  country:string,
+  zipCode:string
+}
