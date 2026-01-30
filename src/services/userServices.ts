@@ -43,7 +43,7 @@ export const loginServices = async(request:UserLoginType)=>{
   //create jwt
   let payload = {
     user:user,
-    exp:Math.floor(Date.now() / 1000) + 60 * 5 // 5 menit
+    exp:Math.floor(Date.now() / 1000) + 60 * 30 // 5 menit
   }
   const token = await sign(payload,Bun.env.TOKEN_SECRET || "default secret")
 
