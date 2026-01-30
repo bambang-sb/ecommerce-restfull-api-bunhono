@@ -3,6 +3,7 @@ import { authMiddleware } from '../middleware/auth-middleware';
 import { loginController, registerController } from '../controllers/userController';
 import categorieController from '../controllers/categorieController';
 import productController from '../controllers/productController';
+import addressController from '../controllers/addressController';
 
 const r = new Hono();
 
@@ -20,5 +21,8 @@ r.get('/product',productController.getAll)
 r.get('/product/:id',productController.getId)
 r.post('/product',productController.create)
 r.put('/product/:id',productController.update)
+
+r.get('/address',addressController.getUserAddress)
+r.post('/address',addressController.createOrUpdateUserAddress)
 
 export default r;
