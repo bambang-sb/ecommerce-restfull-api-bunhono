@@ -27,3 +27,9 @@ export type AddressType = {
   country:string,
   zipCode:string
 }
+
+export type CartItemType = {
+  cart?:number,
+  product:number,
+  quantity:number
+}
