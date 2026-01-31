@@ -33,3 +33,10 @@ export type CartItemType = {
   product:number,
   quantity:number
 }
+
+export type OrderItemType = {
+  product:number,
+  quantity:number,
+  orderAddress:string,
+  zipCode:number
+}
