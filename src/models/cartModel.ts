@@ -1,3 +1,4 @@
+import { Prisma } from '../../prisma/generated/prisma/client';
 import {prisma} from '../config/database';
 import { CartItemType } from '../types/type';
 
@@ -8,7 +9,8 @@ const getCart = async(userId:number)=>{
       userId:true
     },
     where:{
-      userId:userId
+      userId:userId,
+      status:'checkout'
     }
   })
 
@@ -110,6 +112,17 @@ const deleteCartItem = async(cartItemId:number)=>{
   })
 }
 
+const statusAfterOrder = async(userId:number,tx:Prisma.TransactionClient)=>{
+  await tx.carts.updateMany({
+    data:{
+      status:'checkout'
+    },
+    where:{
+      userId:userId
+    }
+  })
+}
+
 export default{
   getCart,
   getCartItems,
@@ -118,5 +131,6 @@ export default{
   createCartItem,
   updateCartItemQuantity,
   updateQuatity,
-  deleteCartItem
+  deleteCartItem,
+  statusAfterOrder
 }

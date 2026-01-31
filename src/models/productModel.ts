@@ -1,5 +1,6 @@
 import {prisma} from '../config/database';
 import { ProductType } from '../types/type';
+import { Prisma } from '../../prisma/generated/prisma/client';
 
 const getAll = async()=>{
   return await prisma.products.findMany();
@@ -57,6 +58,37 @@ const update = async(res:ProductType,id:number)=>{
   })
 }
 
+const getHargaStockByProduct = async(idProduct:number)=>{
+  return await prisma.products.findFirst({
+    select:{
+      price:true,
+      stock:true
+    },
+    where:{
+      idProduct:idProduct
+    }
+  })
+}
+
+const stockDecrement = async(idProduct:number,qty:number,tx:Prisma.TransactionClient)=>{
+  await tx.products.update({
+    where:{
+      idProduct:idProduct
+    },
+    data:{
+      stock:{
+        decrement:qty
+      }
+    }
+  })
+}
+
 export default{
-  getAll,getId,create,update,getProductNameExceptSelf
+  getAll,
+  getId,
+  create,
+  update,
+  getProductNameExceptSelf,
+  getHargaStockByProduct,
+  stockDecrement
 }
