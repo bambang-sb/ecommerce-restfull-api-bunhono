@@ -104,11 +104,20 @@ model CartItems {
   @@map("cart_items")
 }
 
+enum OrderStatus {
+  pending
+  paid
+  process
+  shiped
+  delivered
+  complete
+  cancel
+}
 model Orders {
   idOrder        Int      @id @default(autoincrement())
   userId     Int
-  totalPrice Float
-  orderStatus     String
+  totalPrice Int
+  orderStatus     OrderStatus
   addressOrdered String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
