@@ -78,12 +78,16 @@ model Addresses {
 
   @@map("addresses")
 }
-
+enum CartStatus {
+  null
+  checkout
+}
 model Carts {
   idCart        Int      @id @default(autoincrement())
   userId     Int
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+  status  CartStatus @default(null)
 
   user       Users @relation(fields: [userId], references: [idUser], onDelete: Cascade, onUpdate: Cascade)
   cartItems  CartItems[]
