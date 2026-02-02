@@ -9,8 +9,7 @@ const getCart = async(userId:number)=>{
       userId:true
     },
     where:{
-      userId:userId,
-      status:'checkout'
+      userId:userId
     }
   })
 
@@ -112,13 +111,10 @@ const deleteCartItem = async(cartItemId:number)=>{
   })
 }
 
-const statusAfterOrder = async(userId:number,tx:Prisma.TransactionClient)=>{
-  await tx.carts.updateMany({
-    data:{
-      status:'checkout'
-    },
+const removeCartItemsAfterOrder = async(cartItemId:number,tx:Prisma.TransactionClient)=>{
+  await tx.cartItems.delete({
     where:{
-      userId:userId
+      idCartItem:cartItemId
     }
   })
 }
@@ -132,5 +128,5 @@ export default{
   updateCartItemQuantity,
   updateQuatity,
   deleteCartItem,
-  statusAfterOrder
+  removeCartItemsAfterOrder
 }
