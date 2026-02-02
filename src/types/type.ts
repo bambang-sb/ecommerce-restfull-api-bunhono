@@ -35,6 +35,7 @@ export type CartItemType = {
 }
 
 export type OrderItemType = {
+  cartItem:number
   product:number,
   quantity:number,
   orderAddress:string,
