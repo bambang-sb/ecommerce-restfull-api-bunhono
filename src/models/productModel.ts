@@ -58,29 +58,38 @@ const update = async(res:ProductType,id:number)=>{
   })
 }
 
-const getHargaStockByProduct = async(idProduct:number)=>{
-  return await prisma.products.findFirst({
+const getHargaStockByProduct = async(idProduct:number[])=>{
+  return await prisma.products.findMany({
     select:{
+      idProduct:true,
       price:true,
       stock:true
     },
     where:{
-      idProduct:idProduct
+      idProduct:{
+        in:idProduct
+      }
     }
   })
 }
 
-const stockDecrement = async(idProduct:number,qty:number,tx:Prisma.TransactionClient)=>{
-  await tx.products.update({
-    where:{
-      idProduct:idProduct
-    },
-    data:{
-      stock:{
-        decrement:qty
-      }
-    }
-  })
+const stockDecrement = async(request:{product:number,quantity:number}[],tx:Prisma.TransactionClient)=>{
+  await Promise.all(
+    request.map(v=>(
+      tx.products.update({
+        where:{
+          idProduct:v.product
+        },
+        data:{
+          stock:{
+            decrement:v.quantity
+          }
+        }
+      })
+    ))
+  )
+  
+  
 }
 
 export default{

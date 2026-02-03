@@ -29,7 +29,7 @@ const getOrder = async(userId:number)=>{
   })
 }
 
-const createOrder = async(request:OrderItemType,totalPrice:number,userId:number)=>{
+const createOrder = async(request:OrderItemType,totalPrice:number,userId:number,cartItemId:number[])=>{
   let order = await prisma.$transaction(async(tx)=>{
     let ord = await tx.orders.create({
       data:{
@@ -41,19 +41,23 @@ const createOrder = async(request:OrderItemType,totalPrice:number,userId:number)
       }
     });
 
-    await tx.orderItems.create({
-      data:{
+    let dataItems = request.items.map(v=>(
+      {
         orderId:ord.idOrder,
-        productId:request.product,
-        quantity:request.quantity
+        productId:v.product,
+        quantity:v.quantity
       }
+    ));
+
+    await tx.orderItems.createMany({
+      data:dataItems
     })
 
     //stock decrement
-    await productModel.stockDecrement(request.product,request.quantity,tx);
+    await productModel.stockDecrement(request.items,tx);
 
     //delete cart items after order
-    await cartModel.removeCartItemsAfterOrder(request.cartItem,tx);
+    await cartModel.removeCartItemsAfterOrder(cartItemId,tx);
 
     return ord;
   })

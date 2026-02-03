@@ -111,12 +111,16 @@ const deleteCartItem = async(cartItemId:number)=>{
   })
 }
 
-const removeCartItemsAfterOrder = async(cartItemId:number,tx:Prisma.TransactionClient)=>{
-  await tx.cartItems.delete({
-    where:{
-      idCartItem:cartItemId
-    }
-  })
+const removeCartItemsAfterOrder = async(cartItemId:number[],tx:Prisma.TransactionClient)=>{
+
+  await  tx.cartItems.deleteMany({
+      where:{
+        idCartItem:{
+          in:cartItemId
+        }
+      }
+    })
+  
 }
 
 export default{
