@@ -1,3 +1,4 @@
+import "dotenv/config"
 import { Hono } from 'hono'
 import r from './routes/route'
 import errorMiddleware from './middleware/error-middleware'
