@@ -3,7 +3,19 @@ import { ProductType } from '../types/type';
 import { Prisma } from '../../prisma/generated/prisma/client';
 
 const getAll = async()=>{
-  return await prisma.products.findMany();
+  return await prisma.products.findMany({
+    select:{
+      idProduct:true,
+      name:true,
+      description:true,
+      price:true,
+      categorie:{
+        select:{
+          name:true
+        }
+      }
+    }
+  });
 }
 
 const getProductNameExceptSelf = async(name:string,id:number)=>{
@@ -23,7 +35,12 @@ const getId = async(id:number)=>{
       idProduct:true,
       name:true,
       description:true,
-      price:true
+      price:true,
+      categorie:{
+        select:{
+          name:true
+        }
+      }
     },
     where:{
       idProduct:id
