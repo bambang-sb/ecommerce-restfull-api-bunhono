@@ -29,6 +29,10 @@ const update = async(request:ProductType,id:number)=>{
   let valid = validate(request,productValidation);
   let validId = validate({id:id},productIDValidation);
 
+  //cek product id
+  let data = await productModel.getId(valid.id);
+  if(!data) throw new ErrorHandle('Product Not Found!',404);
+
   //update
   await productModel.update(valid,validId.id);
   return validId.id
