@@ -2,7 +2,12 @@ import {prisma} from '../config/database';
 import { CategorieType } from '../types/type';
 
 const getAll = async()=>{
-  return await prisma.categories.findMany();
+  return await prisma.categories.findMany({
+    select:{
+      idCategorie:true,
+      name:true
+    }
+  });
 }
 
 const getCategorieName = async(name:string)=>{
