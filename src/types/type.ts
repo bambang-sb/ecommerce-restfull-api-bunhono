@@ -29,7 +29,6 @@ export type AddressType = {
 }
 
 export type CartItemType = {
-  cart?:number,
   product:number,
   quantity:number
 }
