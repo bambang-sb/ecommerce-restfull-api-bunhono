@@ -13,7 +13,7 @@ const createCartItem = async(request:CartItemType,userId:number)=>{
   let valid = validate(request,cartItemValidation)
 
   //cek cart
-  let cart = await cartModel.getCart(userId);
+  let cart = await cartModel.getCartBeforeCreate(userId);
   if(cart == null){
     //create cart adn cart items
     await createCartAndCartItem(valid,userId);
