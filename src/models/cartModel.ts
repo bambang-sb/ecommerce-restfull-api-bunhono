@@ -2,11 +2,36 @@ import { Prisma } from '../../prisma/generated/prisma/client';
 import {prisma} from '../config/database';
 import { CartItemType } from '../types/type';
 
+const getCartBeforeCreate = async(userId:number)=>{
+  return await prisma.carts.findFirst({
+    select:{
+      userId:true,
+      idCart:true
+    },
+    where:{
+      userId:userId
+    }
+  })
+}
 const getCart = async(userId:number)=>{
   let res = await prisma.carts.findFirst({
     select:{
       idCart:true,
-      userId:true
+      userId:true,
+      cartItems:{
+        select:{
+          quantity:true
+        },
+        include:{
+          product:{
+            select:{
+              name:true,
+              price:true,
+              stock:true,
+            }
+          }
+        }
+      }
     },
     where:{
       userId:userId
@@ -124,6 +149,7 @@ const removeCartItemsAfterOrder = async(cartItemId:number[],tx:Prisma.Transactio
 }
 
 export default{
+  getCartBeforeCreate,
   getCart,
   getCartItems,
   getCartItemByProduct,
