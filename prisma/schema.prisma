@@ -53,7 +53,8 @@ model Products {
   description String
   price       Float
   stock       Int
-  categorieId  Int 
+  categorieId  Int
+  image String? @db.VarChar(50)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
