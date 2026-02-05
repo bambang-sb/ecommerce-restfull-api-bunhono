@@ -55,7 +55,8 @@ const create = async(res:ProductType)=>{
       description:res.description,
       price:res.price,
       stock:res.stock,
-      categorieId:res.categorie
+      categorieId:res.categorie,
+      image:res.image.name
     }
   })
 }

@@ -20,10 +20,20 @@ const getId = async(c:Context)=>{
 }
 
 const create = async(c:Context)=>{
-  let req = await c.req.json();
-  if(!req) throw new ErrorHandle('invalid request body schema!',400);
-
-  await productService.create(req);
+  // const MAX_SIZE = 2 * 1024 * 1024 // 2MB
+  let req = await c.req.parseBody();
+  let dataJson = {
+    name:req.name.toString(),
+    description:req.description.toString(),
+    stock:Number(req.stock),
+    price:Number(req.price),
+    categorie:Number(req.categorie),
+    image:req.image as File
+  }
+  
+  // if(!data) throw new ErrorHandle('invalid request body schema!',400);
+  
+  await productService.create(dataJson);
 
   return createdResponse(c);
 }
