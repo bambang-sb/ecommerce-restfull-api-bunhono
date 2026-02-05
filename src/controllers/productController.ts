@@ -44,7 +44,7 @@ const update = async(c:Context)=>{
   if(!req) throw new ErrorHandle('invalid request body schema!',400);
 
   let ss =await productService.update(req,Number(id));
-  return successResponse(c,ss)
+  
   return updatedResponse(c);
 }
 
