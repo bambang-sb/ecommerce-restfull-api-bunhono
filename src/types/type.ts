@@ -18,7 +18,8 @@ export type ProductType = {
   description: string,
   price: number,
   stock:number,
-  categorie:number
+  categorie:number,
+  image:File
 }
 
 export type AddressType = {

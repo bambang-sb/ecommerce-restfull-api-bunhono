@@ -10,7 +10,8 @@ const productValidation = z.object({
   stock: z.number({message: "stock is required!"})
     .min(0,{message: "stock must be at least 0!"}),
   categorie: z.number({message: "category is required!"})
-    .positive({message: "category must be positive!"})
+    .positive({message: "category must be positive!"}),
+  image:z.file({message:"image not choise"}).max(2097152,{message:'max file 2MB'}).mime(["image/png","image/jpeg"])
 }).strict();
 
 const productIDValidation = z.object({
