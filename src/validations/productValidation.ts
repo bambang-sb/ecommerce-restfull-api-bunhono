@@ -5,11 +5,11 @@ const productValidation = z.object({
     .min(3,{message:'name minimal 3 character!'})
     .max(100,{message:'name maximal 100 character!'}),
   description: z.string({message: "description is required!"}),
-  price: z.number({message: "price is required!"})
+  price: z.coerce.number({message: "price is required!"})
     .positive({message: "price must be positive!"}),
-  stock: z.number({message: "stock is required!"})
+  stock: z.coerce.number({message: "stock is required!"})
     .min(0,{message: "stock must be at least 0!"}),
-  categorie: z.number({message: "category is required!"})
+  categorie: z.coerce.number({message: "category is must be number!"})
     .positive({message: "category must be positive!"}),
   image:z.file({message:"image not choise"}).max(2097152,{message:'max file 2MB'}).mime(["image/png","image/jpeg"])
 }).strict();
