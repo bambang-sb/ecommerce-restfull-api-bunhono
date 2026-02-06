@@ -20,15 +20,15 @@ const getId = async(c:Context)=>{
 }
 
 const create = async(c:Context)=>{
-  // const MAX_SIZE = 2 * 1024 * 1024 // 2MB
-  let req = await c.req.parseBody();
+  let req = await c.req.formData();
+  if(req.getAll('image').length > 1) throw new ErrorHandle('max file upload 1',400);
   let dataJson = {
-    name:req.name.toString(),
-    description:req.description.toString(),
-    stock:Number(req.stock),
-    price:Number(req.price),
-    categorie:Number(req.categorie),
-    image:req.image as File
+    name:req.get('name') as string,
+    description:req.get('description')as string,
+    stock:req.get('stock') as string,
+    price:req.get('price') as string,
+    categorie:req.get('categorie') as string,
+    image:req.get('image') as File
   }
   
   // if(!data) throw new ErrorHandle('invalid request body schema!',400);
