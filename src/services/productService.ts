@@ -3,7 +3,7 @@ import productModel from "../models/productModel";
 import { ProductType } from "../types/type";
 import { productIDValidation, productValidation } from "../validations/productValidation"
 import { validate } from "../validations/validate"
-import path from 'path'
+import {uploadFile} from '../helpers/upload'
 import fs from 'fs/promises'
 
 const getAll = async()=>{
@@ -23,27 +23,21 @@ const create = async(request:ProductType)=>{
   let valid = validate(request,productValidation);
   
   //config upload file
-  const buffer = Buffer.from(await valid.image.arrayBuffer())
-  const filename = `${Date.now()}-${valid.image.name}`
-  let uploadDir = path.join(process.cwd(),"/uploads");
-  const filePath = path.join(uploadDir, filename)
+  let {pathFile,filename} = await uploadFile(valid.image)
   valid.image.name = filename
   
   //save
   // let save = await productModel.create(valid);
   // if(!save)throw new ErrorHandle('Fail save product!',400);
   try{
-    //upload file
-    await fs.writeFile(filePath, buffer)
-
     //save db
     await productModel.create(valid)
     
   }catch(e){
-    if(await fs.exists(filePath)){
-      await fs.unlink(filePath)
+    if(await fs.exists(pathFile)){
+      await fs.unlink(pathFile)
     }
-    throw new ErrorHandle('create product fail!',404);
+    throw new ErrorHandle('create product fail!'+e,404);
   }
   
 }

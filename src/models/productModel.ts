@@ -53,9 +53,9 @@ const create = async(res:ProductType)=>{
     data:{
       name:res.name,
       description:res.description,
-      price:res.price,
-      stock:res.stock,
-      categorieId:res.categorie,
+      price:Number(res.price),
+      stock:Number(res.stock),
+      categorieId:Number(res.categorie),
       image:res.image.name
     }
   })
@@ -69,9 +69,9 @@ const update = async(res:ProductType,id:number)=>{
     data:{
       name:res.name,
       description:res.description,
-      price:res.price,
-      stock:res.stock,
-      categorieId:res.categorie
+      price:Number(res.price),
+      stock:Number(res.stock),
+      categorieId:Number(res.categorie)
     }
   })
 }
