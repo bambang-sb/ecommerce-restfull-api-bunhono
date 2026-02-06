@@ -16,9 +16,9 @@ export type UserLoginType = {
 export type ProductType = {
   name: string,
   description: string,
-  price: number,
-  stock:number,
-  categorie:number,
+  price: string,
+  stock:string,
+  categorie:string,
   image:File
 }
 
