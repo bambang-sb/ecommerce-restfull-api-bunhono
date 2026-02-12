@@ -59,7 +59,7 @@ PUT api/product/:id
 or
 - folder doc/index.html
 or 
--https://bambang-sb.github.io/ecommerce-restfull-api-bunhono/
+- https://bambang-sb.github.io/ecommerce-restfull-api-bunhono/
 
 ### All endpoints documentasi dan testing dengan apidog
 Includes:
