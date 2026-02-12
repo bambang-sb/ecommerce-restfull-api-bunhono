@@ -1,5 +1,4 @@
 # Ecommerce Restfull Api Bun + HonoJS
-=======
 Api Backend untuk sistem Ecommerce menggunakan Bun dan HonoJS sebagai framework, mysql sebagai database serta ORM menggunakan prisma client.
 
 ## Fitur
@@ -58,7 +57,7 @@ PUT api/product/:id
 ### Full endpoint + documentasi
 - https://ecom-bun-hono.apidog.io/
 or
--
+- folder doc/documentation.html
 
 ### All endpoints documentasi dan testing dengan apidog
 Includes:
