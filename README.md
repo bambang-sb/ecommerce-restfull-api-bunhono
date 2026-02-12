@@ -57,7 +57,9 @@ PUT api/product/:id
 ### Full endpoint + documentasi
 - https://ecom-bun-hono.apidog.io/
 or
-- folder doc/documentation.html
+- folder doc/index.html
+or 
+-https://bambang-sb.github.io/ecommerce-restfull-api-bunhono/
 
 ### All endpoints documentasi dan testing dengan apidog
 Includes:
