@@ -8,7 +8,7 @@ const orderItemValidation = z.object({
 
 const orderValidation = z.object({
   orderAddress:z.string({message:'address is required!'}),
-  zipCode:z.number({message:"zip code is required!"}).min(1, 'Product must be at last 1'),
+  zipCode:z.number({message:"zip code is number!"}).min(1, 'Product must be at last 1'),
   items:z.array(orderItemValidation).min(1,"item cannot be null!")
 });
 
