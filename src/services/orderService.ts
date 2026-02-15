@@ -1,6 +1,8 @@
+import {prisma} from '../config/database';
 import { ErrorHandle } from "../errors/errors-handle";
 import orderModel from "../models/orderModel";
 import productModel from "../models/productModel";
+import cartModel from '../models/cartModel';
 import { OrderItemType } from "../types/type";
 import orderItemValidation from "../validations/orderItemValidation";
 import { validate } from "../validations/validate";
@@ -27,7 +29,22 @@ const createOrder = async(request:OrderItemType,userId:number)=>{
   let sumPrice = totalPrice.reduce((acc,cur)=>acc+cur,0);
 
   //create order
-  let validOrder = await orderModel.createOrder(request,sumPrice,userId,cartItemId);
+  let validOrder = await prisma.$transaction(async(tx)=>{
+    //create order
+    let order = await orderModel.createOrder(request,sumPrice,userId,cartItemId,tx);
+
+    //create order item
+    await orderModel.createOrderItem(tx,request,order.idOrder);
+
+    //update stock decrement
+    await productModel.stockDecrement(order.idOrder,tx);
+
+    //delete cart item after order
+    await cartModel.removeCartItemsAfterOrder(cartItemId,tx);
+    
+    return order;
+  })
+  // let validOrder = await orderModel.createOrder(request,sumPrice,userId,cartItemId);
   if(!validOrder) throw new ErrorHandle('create order fail!',400)
 
 }

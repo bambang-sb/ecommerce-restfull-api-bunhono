@@ -1,3 +1,4 @@
+import { Prisma } from "../../prisma/generated/prisma/client"
 import { prisma } from "../config/database"
 import { OrderItemType } from "../types/type"
 import cartModel from "./cartModel"
@@ -29,8 +30,8 @@ const getOrder = async(userId:number)=>{
   })
 }
 
-const createOrder = async(request:OrderItemType,totalPrice:number,userId:number,cartItemId:number[])=>{
-  let order = await prisma.$transaction(async(tx)=>{
+const createOrder = async(request:OrderItemType,totalPrice:number,userId:number,cartItemId:number[],tx:Prisma.TransactionClient)=>{
+  
     let ord = await tx.orders.create({
       data:{
         userId:userId,
@@ -41,30 +42,26 @@ const createOrder = async(request:OrderItemType,totalPrice:number,userId:number,
       }
     });
 
-    let dataItems = request.items.map(v=>(
+    return ord;
+  
+}
+
+const createOrderItem = async(tx:Prisma.TransactionClient,request:OrderItemType,orderId:number)=>{
+  let dataItems = request.items.map(v=>(
       {
-        orderId:ord.idOrder,
+        orderId:orderId,
         productId:v.product,
         quantity:v.quantity
       }
-    ));
+  ));
 
     await tx.orderItems.createMany({
       data:dataItems
-    })
-
-    //stock decrement
-    await productModel.stockDecrement(ord.idOrder,tx);
-
-    //delete cart items after order
-    await cartModel.removeCartItemsAfterOrder(cartItemId,tx);
-
-    return ord;
-  })
-  return order;
+    });
 }
 
 export default{
   getOrder,
-  createOrder
+  createOrder,
+  createOrderItem
 }
