@@ -91,21 +91,14 @@ const getHargaStockByProduct = async(idProduct:number[])=>{
   })
 }
 
-const stockDecrement = async(request:{product:number,quantity:number}[],tx:Prisma.TransactionClient)=>{
-  await Promise.all(
-    request.map(v=>(
-      tx.products.update({
-        where:{
-          idProduct:v.product
-        },
-        data:{
-          stock:{
-            decrement:v.quantity
-          }
-        }
-      })
-    ))
-  )
+const stockDecrement = async(orderId:number,tx:Prisma.TransactionClient)=>{
+  
+  await tx.$executeRaw`
+    UPDATE products p 
+    JOIN order_items oi ON p.idProduct = oi.productId
+    SET p.stock = p.stock - oi.quantity 
+    WHERE oi.orderId = ${orderId}
+    `;
   
   
 }

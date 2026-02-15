@@ -54,7 +54,7 @@ const createOrder = async(request:OrderItemType,totalPrice:number,userId:number,
     })
 
     //stock decrement
-    await productModel.stockDecrement(request.items,tx);
+    await productModel.stockDecrement(ord.idOrder,tx);
 
     //delete cart items after order
     await cartModel.removeCartItemsAfterOrder(cartItemId,tx);
