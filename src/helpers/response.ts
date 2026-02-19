@@ -10,6 +10,18 @@ export const successResponse = <T>(c:Context,data: T, msg = 'Success') => {
   },200);
 };
 
+export const successResponsePaginate = <T>(c:Context,data: T, cursor:number|null,limit:number, msg = 'Success') => {
+  return c.json({
+    statusCode:200,
+    message:msg,
+    data:data,
+    meta:{
+      nextCursor:cursor,
+      limit:limit
+    }
+  },200);
+};
+
 export const createdResponse = (c:Context, msg = 'created') => {
   return c.json({
     statusCode:201,

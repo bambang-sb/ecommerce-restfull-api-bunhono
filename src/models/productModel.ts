@@ -2,6 +2,29 @@ import {prisma} from '../config/database';
 import { ProductType } from '../types/type';
 import { Prisma } from '../../prisma/generated/prisma/client';
 
+const getProductCustomer = async(cursor:number|undefined,limit:number)=>{
+  //ambil data pertama
+  return await prisma.products.findMany({
+    select:{
+      idProduct:true,
+      name:true,
+      description:true,
+      price:true
+    },
+    take:limit,
+    skip:cursor?cursor:0,
+    ...(cursor && {
+      cursor:{
+        idProduct:cursor
+      }
+    }),
+    orderBy:{
+      idProduct:'asc'
+    }
+
+  })
+}
+
 const getAll = async()=>{
   return await prisma.products.findMany({
     select:{
@@ -110,5 +133,6 @@ export default{
   update,
   getProductNameExceptSelf,
   getHargaStockByProduct,
-  stockDecrement
+  stockDecrement,
+  getProductCustomer
 }

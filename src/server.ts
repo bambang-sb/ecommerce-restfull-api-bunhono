@@ -3,11 +3,12 @@ import { Hono } from 'hono'
 import r from './routes/route'
 import errorMiddleware from './middleware/error-middleware'
 import { errorResponse } from './helpers/response';
+import umum from './routes/app'
 
 const app = new Hono()
 
 app.route('/api',r)
-
+app.route('/app',umum)
 app.get('/', async (c) => {
 
   return c.text('Hello Hono!')
