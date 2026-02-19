@@ -34,11 +34,21 @@ NODE_ENV=""
 git clone https://github.com/bambang-sb/ecommerce-restfull-api-bunhono.git
 cd ecommerce-restfull-api-bunhono
 bun install
+or
+npm install
+```
+Generate prisma
+```sh
+bunx prisma generate
+or
+npx prisma generate
 ```
 
 To run:
 ```sh
 bun run dev
+or
+npm run dev
 ```
 
 open http://localhost:3000
