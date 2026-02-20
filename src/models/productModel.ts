@@ -99,6 +99,17 @@ const update = async(res:ProductType,id:number)=>{
   })
 }
 
+const updateImage = async(res:{image:File,imageOld:string},idProduct:number)=>{
+  await prisma.products.update({
+    data:{
+      image:res.image.name
+    },
+    where:{
+      idProduct:idProduct
+      }
+  })
+}
+
 const getHargaStockByProduct = async(idProduct:number[])=>{
   return await prisma.products.findMany({
     select:{
@@ -134,5 +145,6 @@ export default{
   getProductNameExceptSelf,
   getHargaStockByProduct,
   stockDecrement,
-  getProductCustomer
+  getProductCustomer,
+  updateImage
 }

@@ -48,6 +48,22 @@ const update = async(c:Context)=>{
   return updatedResponse(c);
 }
 
+const updateImage = async(c:Context)=>{
+  let req = await c.req.formData();
+  if(req.getAll('image').length > 1) throw new ErrorHandle('max file upload 1',400);
+  let dataJson = {
+    image:req.get('image') as File,
+    imageOld:req.get('imageOld') as string
+  }
+  let idProduct = c.req.param('id');
+  
+  // if(!data) throw new ErrorHandle('invalid request body schema!',400);
+  
+  await productService.updateImage(dataJson,idProduct);
+
+  return updatedResponse(c);
+}
+
 export default{
-  getAll,getId,create,update
+  getAll,getId,create,update, updateImage
 }

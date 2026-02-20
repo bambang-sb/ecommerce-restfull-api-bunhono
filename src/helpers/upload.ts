@@ -11,7 +11,7 @@ const uploadFile = async(image:any)=>{
 
   await fs.writeFile(filePath, buffer)
 
-  return {"pathFile":filePath,"filename":filename};
+  return {"pathFile":filePath,"filename":filename,"uploadDir":uploadDir};
 }
 
 export{

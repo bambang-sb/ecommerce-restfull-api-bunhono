@@ -19,7 +19,14 @@ const productIDValidation = z.object({
     .positive({message: "id must be positive!"})
 }).strict();
 
+
+const productImageValidation = z.object({
+  image:z.file({message:"image not choise"}).max(2097152,{message:'max file 2MB'}).mime(["image/png","image/jpeg"]),
+  imageOld:z.string("image old must be string").max(50,{message:'max 50 character!'}).optional()
+}).strict();
+
 export {
   productValidation,
-  productIDValidation
+  productIDValidation,
+  productImageValidation
 }
