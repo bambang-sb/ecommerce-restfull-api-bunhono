@@ -10,10 +10,10 @@ import { validate } from "../validations/validate";
 const createOrder = async(request:OrderItemType,userId:number)=>{
   let valid:OrderItemType = validate(request,orderItemValidation);
 
-  //get productID
+  //get productID [number,number]
   const productId = valid.items.map(val=>val.product);
 
-  //get cartItem ID
+  //get cartItem ID [number,number]
   const cartItemId = valid.items.map(val=>val.cartItem);
 
   //get stock and price
