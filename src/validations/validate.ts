@@ -16,6 +16,7 @@ const validate = (req: any, schema: any) => {
       err[key] ||= [];
       err[key].push(`${issue.message}`);
     });
+    // throw new ValidationError('Validation Failed ', val.error.flatten().fieldErrors, 422);//test
     throw new ValidationError('Validation Failed ', err, 422);
   }
   return val.data;

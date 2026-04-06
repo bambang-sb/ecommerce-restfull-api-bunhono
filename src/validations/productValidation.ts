@@ -2,10 +2,13 @@ import * as z from 'zod'
 
 const productValidation = z.object({
   name: z.string({message: "name is required!"})
+    .nonempty({message: 'name cannot be empty'})
     .min(3,{message:'name minimal 3 character!'})
     .max(100,{message:'name maximal 100 character!'}),
-  description: z.string({message: "description is required!"}),
+  description: z.string({message: "description is required!"})
+    .nonempty({message: 'description cannot be empty'}),
   price: z.coerce.number({message: "price is required!"})
+    .min(1,{message: "price must be at least 1!"})
     .positive({message: "price must be positive!"}),
   stock: z.coerce.number({message: "stock is required!"})
     .min(0,{message: "stock must be at least 0!"}),

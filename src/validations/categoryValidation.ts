@@ -2,6 +2,7 @@ import * as z from 'zod'
 
 const categoryValidation = z.object({
   name: z.string({message: "name is required!"})
+    .nonempty({message: 'name cannot be empty'})
     .min(3,{message:'name minimal 3 character!'})
     .max(100,{message:'name maximal 100 character!'})
 }).strict();
