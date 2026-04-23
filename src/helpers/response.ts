@@ -48,7 +48,7 @@ export const errorResponse = (c:Context, msg = 'Error', statusCode:StatusCode = 
 export const validationErrorResponse = (c:Context, errors: Record<string,string[]>, statusCode:StatusCode = 422) => {
   return c.json({
     statusCode:statusCode,
-    message:'validation error!',
+    message:c.error?.message || 'Validation Fail!',
     errors:errors,
   },statusCode as unknown as ContentfulStatusCode);
 }

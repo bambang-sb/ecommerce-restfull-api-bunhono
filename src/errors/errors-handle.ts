@@ -16,9 +16,9 @@ export class ValidationError extends Error {
   statusCode: StatusCode;
   errors: Record<string, string[]>;
 
-  constructor(message: string, errors: Record<string,string[]>,statusCode: StatusCode) {
+  constructor(errors: Record<string,string[]>,message: string="Validation Fail!", ) {
     super(message);
-    this.statusCode = statusCode;
+    this.statusCode = 422;
     this.errors = errors;
   }
 }
